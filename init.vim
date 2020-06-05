@@ -30,6 +30,11 @@ Plug 'drewtempelmeyer/palenight.vim'
 
 Plug 'junegunn/fzf'
 
+Plug 'psf/black', { 'tag': '19.10b0' }
+
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+
+Plug 'nvie/vim-flake8'
 call plug#end()
 
 let g:ctrlp_map = '<c-p>'
@@ -42,7 +47,7 @@ let g:airline_theme='kalisi'
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 
 set number
-colorscheme palenight
+colorscheme darkblue 
 set background=dark
 let g:lightline = { 'colorscheme': 'palenight' }
 let g:airline_theme = "palenight"
@@ -74,3 +79,64 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 nnoremap <silent> <F2> :NERDTreeFind<CR>
 noremap <F3> :NERDTreeToggle<CR>
 
+let g:python_highlight_all = 1
+
+let g:deoplete#auto_complete_delay = 100
+
+
+" semish sytanx linter
+let g:semshi#filetypes = ['python']
+nmap <silent> <leader>rr :Semshi rename<CR>
+
+nmap <silent> <Tab> :Semshi goto name next<CR>
+nmap <silent> <S-Tab> :Semshi goto name prev<CR>
+
+nmap <silent> <leader>c :Semshi goto class next<CR>
+nmap <silent> <leader>C :Semshi goto class prev<CR>
+
+nmap <silent> <leader>f :Semshi goto function next<CR>
+nmap <silent> <leader>F :Semshi goto function prev<CR>
+
+nmap <silent> <leader>gu :Semshi goto unresolved first<CR>
+nmap <silent> <leader>gp :Semshi goto parameterUnused first<CR>
+
+nmap <silent> <leader>ee :Semshi error<CR>
+nmap <silent> <leader>ge :Semshi goto error<CR>
+
+
+function MyCustomHighlights()
+    hi semshiGlobal      ctermfg=red guifg=#ff0000
+    hi semshiLocal           ctermfg=209 guifg=#ff875f
+    hi semshiGlobal          ctermfg=214 guifg=#ffaf00
+    hi semshiImported        ctermfg=214 guifg=#ffaf00 cterm=bold gui=bold
+    hi semshiParameter       ctermfg=75  guifg=#5fafff
+    hi semshiParameterUnused ctermfg=117 guifg=#87d7ff cterm=underline gui=underline
+    hi semshiFree            ctermfg=218 guifg=#ffafd7
+    hi semshiBuiltin         ctermfg=207 guifg=#ff5fff
+    hi semshiAttribute       ctermfg=49  guifg=#00ffaf
+    hi semshiSelf            ctermfg=249 guifg=#b2b2b2
+    hi semshiUnresolved      ctermfg=226 guifg=#ffff00 cterm=underline gui=underline
+    hi semshiSelected        ctermfg=231 guifg=#ffffff ctermbg=161 guibg=#d7005f
+    hi semshiErrorSign       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
+    hi semshiErrorChar       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
+    sign define semshiError text=E> texthl=semshiErrorSign
+endfunction
+
+autocmd FileType python call MyCustomHighlights()
+
+autocmd ColorScheme * call MyCustomHighlights()
+
+
+"flake8
+autocmd FileType python map <buffer> <F6> :call flake8#Flake8()<CR>
+autocmd BufWritePost *.py call flake8#Flake8()
+
+"black
+nnoremap <F9> :Black<CR>
+"autocmd BufWritePost *.py silent! execute ':Black'
+
+
+
+
+"cursor
+set mouse=a
