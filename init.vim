@@ -35,12 +35,16 @@ Plug 'psf/black', { 'tag': '19.10b0' }
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
 Plug 'nvie/vim-flake8'
+
+Plug 'wsdjeg/FlyGrep.vim'
 call plug#end()
 
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
-let g:deoplete#enable_at_startup = 1
+nnoremap <Space>s/ :FlyGrep<cr>
+
+call deoplete#enable() 
 
 let g:airline_theme='kalisi'
 
@@ -79,9 +83,12 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 nnoremap <silent> <F2> :NERDTreeFind<CR>
 noremap <F3> :NERDTreeToggle<CR>
 
+nnoremap <silent> <leader>vs :vsplit<CR>
+nnoremap <silent> <leader>hs :hsplit<CR>
+
 let g:python_highlight_all = 1
 
-let g:deoplete#auto_complete_delay = 100
+"let g:deoplete#auto_complete_delay = 100
 
 
 " semish sytanx linter
@@ -133,7 +140,7 @@ autocmd BufWritePost *.py call flake8#Flake8()
 
 "black
 nnoremap <F9> :Black<CR>
-"autocmd BufWritePost *.py silent! execute ':Black'
+autocmd BufWritePost *.py silent! execute ':Black'
 
 
 
