@@ -18,6 +18,8 @@ Plug 'davidhalter/jedi-vim'
 
 Plug 'tpope/vim-fugitive'
 
+Plug 'dense-analysis/ale'
+
 Plug 'scrooloose/nerdtree'
 
 Plug 'kien/ctrlp.vim'
@@ -34,9 +36,10 @@ Plug 'psf/black', { 'tag': '19.10b0' }
 
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
-Plug 'nvie/vim-flake8'
-
 Plug 'wsdjeg/FlyGrep.vim'
+
+Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
+
 call plug#end()
 
 let g:ctrlp_map = '<c-p>'
@@ -51,9 +54,9 @@ let g:airline_theme='kalisi'
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 
 set number
-colorscheme darkblue 
+colorscheme gruvbox 
 set background=dark
-let g:lightline = { 'colorscheme': 'palenight' }
+let g:lightline = { 'colorscheme': 'gruvbox' }
 let g:airline_theme = "palenight"
 
 if (has("nvim"))
@@ -88,7 +91,7 @@ nnoremap <silent> <leader>hs :hsplit<CR>
 
 let g:python_highlight_all = 1
 
-"let g:deoplete#auto_complete_delay = 100
+let g:deoplete#auto_complete_delay = 100
 
 
 " semish sytanx linter
@@ -134,10 +137,6 @@ autocmd FileType python call MyCustomHighlights()
 autocmd ColorScheme * call MyCustomHighlights()
 
 
-"flake8
-autocmd FileType python map <buffer> <F6> :call flake8#Flake8()<CR>
-autocmd BufWritePost *.py call flake8#Flake8()
-
 "black
 nnoremap <F9> :Black<CR>
 autocmd BufWritePost *.py silent! execute ':Black'
@@ -147,3 +146,10 @@ autocmd BufWritePost *.py silent! execute ':Black'
 
 "cursor
 set mouse=a
+
+"ALE linter
+let g:ale_linters = {'python': ['flake8']}
+
+"doctstring
+let g:pydocstring_formatter = 'google'
+nnoremap <F4> :Pydocstring<CR>
