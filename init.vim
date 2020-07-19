@@ -153,3 +153,10 @@ let g:ale_linters = {'python': ['flake8']}
 "doctstring
 let g:pydocstring_formatter = 'google'
 nnoremap <F4> :Pydocstring<CR>
+
+"PRE Requeirements.
+"Install in base libraby
+"pip install pynvim --upgrade 
+"pip install flake8
+"pip install black
+"pip instal jedi
